@@ -1,0 +1,305 @@
+1. Max Two
+code-
+import java.util.Scanner;
+
+public class MaximumNumber {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        int a = scanner.nextInt();
+        
+        int b = scanner.nextInt();
+        
+        int max = a > b ? a : b;
+        
+        System.out.println(max);
+        
+        scanner.close();
+    }
+}
+
+2. Max Of Three 4
+code-
+import java.util.Scanner;
+
+public class MaximumNumber {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        int a = scanner.nextInt();
+        
+        int b = scanner.nextInt();
+        
+        int c = scanner.nextInt();
+        
+        int max = a;
+        
+        if (b > max) {
+            max = b;
+        }
+        
+        if (c > max) {
+            max = c;
+        }
+        
+        System.out.println(max);
+        
+        scanner.close();
+    }
+}
+
+3. Grade 2
+code-
+import java.util.Scanner;
+
+public class StudentGrade {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        int a = scanner.nextInt();
+        
+        int b = scanner.nextInt();
+        
+        int c = scanner.nextInt();
+        
+        int d = scanner.nextInt();
+        
+        int e = scanner.nextInt();
+        
+        int totalMarks = a + b + c + d + e;
+        int percentage = (int) Math.floor((totalMarks * 100) / 500);
+        
+        System.out.println(percentage);
+        
+        String grade;
+        if (percentage >= 90) {
+            grade = "A";
+        } else if (percentage >= 80) {
+            grade = "B";
+        } else if (percentage >= 70) {
+            grade = "C";
+        } else if (percentage >= 60) {
+            grade = "D";
+        } else if (percentage >= 40) {
+            grade = "E";
+        } else {
+            grade = "F";
+        }
+        
+        System.out.println(grade);
+        
+        scanner.close();
+    }
+}
+
+4. Which Month? 1
+code-
+import java.util.Scanner;
+
+public class MonthOfYear {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        int monthNumber = scanner.nextInt();
+        
+        String month;
+        switch (monthNumber) {
+            case 1:
+                month = "January";
+                break;
+            case 2:
+                month = "February";
+                break;
+            case 3:
+                month = "March";
+                break;
+            case 4:
+                month = "April";
+                break;
+            case 5:
+                month = "May";
+                break;
+            case 6:
+                month = "June";
+                break;
+            case 7:
+                month = "July";
+                break;
+            case 8:
+                month = "August";
+                break;
+            case 9:
+                month = "September";
+                break;
+            case 10:
+                month = "October";
+                break;
+            case 11:
+                month = "November";
+                break;
+            case 12:
+                month = "December";
+                break;
+            default:
+                month = "Invalid month number";
+        }
+        
+        System.out.println(month);
+        
+        scanner.close();
+    }
+}
+
+5. Valid Triangle 11
+code-
+import java.util.Scanner;
+
+public class TriangleValidity {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        int angleA = scanner.nextInt();
+
+        int angleB = scanner.nextInt();
+
+        int angleC = scanner.nextInt();
+
+        int sumOfAngles = angleA + angleB + angleC;
+
+        boolean isValidTriangle = sumOfAngles == 180;
+
+        if (isValidTriangle) {
+            System.out.println("1");
+        } else {
+            System.out.println("0");
+        }
+
+        scanner.close();
+    }
+}
+
+6. Bank Account 5
+code-
+import java.util.Scanner;
+
+public class BankAccount {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        int balance = scanner.nextInt();
+
+        int type = scanner.nextInt();
+
+        int amount = scanner.nextInt();
+
+        if (type == 1) {
+            balance += amount; // Perform ADD operation
+        } else if (type == 2) {
+            if (amount > balance) {
+                System.out.println("Insufficient Funds"); // Debit amount is greater than the current balance
+                scanner.close();
+                return; // Skip the operation
+            } else {
+                balance -= amount; // Perform SUBTRACT operation
+            }
+        }
+
+        System.out.println(balance);
+
+        scanner.close();
+    }
+}
+
+7.Divisible by two number
+code-
+import java.util.Scanner;
+
+public class DivisibilityCheck {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        int A = scanner.nextInt();
+
+        int result = (A % 5 == 0 && A % 11 == 0) ? 1 : 0;
+
+        System.out.println(result);
+
+        scanner.close();
+    }
+}
+
+8.Which Triangle? 2
+code-
+import java.util.Scanner;
+
+public class TriangleType {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        int A = scanner.nextInt();
+
+        int B = scanner.nextInt();
+
+        int C = scanner.nextInt();
+
+        if (A == B && B == C) {
+            System.out.println("equilateral");
+        } else if (A != B && B != C && C != A) {
+            System.out.println("scalene");
+        } else {
+            System.out.println("isosceles");
+        }
+
+        scanner.close();
+    }
+}
+
+9. Categorize Number?
+code-
+import java.util.Scanner;
+
+public class NumberCheck {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        int A = scanner.nextInt();
+
+        int result;
+        if (A > 0) {
+            result = 1; // A is positive
+        } else if (A < 0) {
+            result = -1; // A is negative
+        } else {
+            result = 0; // A is neither positive nor negative
+        }
+
+        System.out.println(result);
+
+        scanner.close();
+    }
+}
+
+10. floor?
+code-
+import java.util.Scanner;
+
+public class NumberCheck {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        int A = scanner.nextInt();
+
+        int result;
+        if (A > 0) {
+            result = 0; // A is positive
+        } else if (A < 0) {
+            result = -1; // A is negative
+        } else {
+            result = 1; // A is neither positive nor negative
+        }
+
+        System.out.println(result);
+
+        scanner.close();
+    }
+}
