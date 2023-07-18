@@ -1,0 +1,220 @@
+1. Print N stars
+code-
+import java.util.Scanner;
+
+public class PrintStars {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        int N = scanner.nextInt();
+
+        for (int i = 0; i < N; i++) {
+            System.out.print("*");
+        }
+
+        scanner.close();
+    }
+}
+
+2. Print a matrix of stars
+code-
+import java.util.Scanner;
+
+public class PrintRectangle {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        int N = scanner.nextInt();
+
+        int M = scanner.nextInt();
+
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < M; j++) {
+                System.out.print("*");
+            }
+            System.out.println();
+        }
+
+        scanner.close();
+    }
+}
+
+3. Stair Pattern 1
+code-
+import java.util.Scanner;
+
+public class StairPattern {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        int N = scanner.nextInt();
+
+        for (int i = 1; i <= N; i++) {
+            for (int j = 1; j <= i; j++) {
+                System.out.print("*");
+            }
+            System.out.println();
+        }
+
+        scanner.close();
+    }
+}
+
+4. Skip Even Numbers Half Pyramid
+code-
+import java.util.Scanner;
+
+public class Pattern {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        int N = scanner.nextInt();
+
+        for (int i = 1; i <= N; i++) {
+            for (int j = 1; j <= i; j++) {
+                if (j % 2 != 0) {
+                    System.out.print(j);
+                    if (j < i) {
+                        System.out.print(" ");
+                    }
+                }
+            }
+            System.out.println();
+        }
+
+        scanner.close();
+    }
+}
+
+
+5. Two Line Star Pattern
+code- 
+import java.util.Scanner;
+
+public class Pattern {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        int N = scanner.nextInt();
+
+        for (int i = 1; i <= N; i++) {
+            // Print asterisk at the beginning
+            System.out.print("*");
+
+            // Print spaces in between
+            for (int j = 1; j <= N - 2; j++) {
+                System.out.print(" ");
+            }
+
+            // Print asterisk at the end
+            System.out.println("*");
+        }
+
+        scanner.close();
+    }
+}
+
+6. Leading spaces pyramid
+code-
+import java.util.Scanner;
+
+public class Pattern {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        int N = scanner.nextInt();
+
+        for (int i = 1; i <= N; i++) {
+            // Print leading spaces
+            for (int j = 1; j <= N - i; j++) {
+                System.out.print(" ");
+            }
+
+            // Print asterisks
+            for (int k = 1; k <= i; k++) {
+                System.out.print("*");
+            }
+
+            // Move to the next line
+            System.out.println();
+        }
+
+        scanner.close();
+    }
+}
+
+7. From top to down
+code- 
+import java.util.Scanner;
+
+public class NaturalNumbers {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        int N = scanner.nextInt();
+
+        for (int i = 1; i <= N; i++) {
+            System.out.print(i + " ");
+        }
+
+        scanner.close();
+    }
+}
+
+8. Odd Game 1
+code-
+import java.util.Scanner;
+
+public class OddNumbers {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        int N = scanner.nextInt();
+
+        for (int i = 1; i <= N; i += 2) {
+            System.out.print(i + " ");
+        }
+
+        scanner.close();
+    }
+}
+
+9. Summation Game
+code- 
+import java.util.Scanner;
+
+public class SumOfNaturalNumbers {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        int N = scanner.nextInt();
+
+        int sum = 0;
+
+        for (int i = 1; i <= N; i++) {
+            sum += i;
+        }
+
+        System.out.println(sum);
+
+        scanner.close();
+    }
+}
+
+10. From down to top
+code-
+import java.util.Scanner;
+
+public class NaturalNumbersReverse {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        int N = scanner.nextInt();
+
+        for (int i = N; i >= 1; i--) {
+            System.out.print(i + " ");
+        }
+
+        scanner.close();
+    }
+}
