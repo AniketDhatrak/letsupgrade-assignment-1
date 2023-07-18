@@ -1,0 +1,166 @@
+Quiz Day 1 (data type and variable )
+
+1.JDK stands for ____.
+Ans- Java development kit
+
+2. What makes the Java platform independent?
+Advanced programming language
+It uses bytecode for execution
+Class compilation
+Ans- All of these
+
+3. Can we keep a different name for the java class name and java file name?
+Ans-Yes
+
+4. What is the entry point of a program in Java?
+Ans- main() method
+
+5. Which of the following is the correct syntax to create a variable in Java?
+Ans- int name;
+
+6. Can the Java program accept input from the command line?
+Ans- Yes, using command-line arguments
+
+7. String args[] in main method are used for?
+public static void main(String args[])
+{
+  //
+}
+
+Ans- B) Passing arguments at run time
+
+8. What is the use of Access modifier "pubic" in Java language?
+Ans- D) None of the above
+
+9. What is the need to mention "static" before main method?
+Ans- B) To make main method as class method common to all instances
+
+10. What does a Data Type in Java refers to?
+Ans- C) The type or variety of data being handled for reading and writing
+
+11. which among the following is not a Data Type in Java?
+Ans-C) long double
+
+12. Which is the data type that is not recommended for numeric applications in Java?
+Ans- B) float
+
+13. What is the size of a FLOAT floating point number in Java?
+Ans- B) 4 bytes
+
+14. What is the abbreviation of ASCII?
+Ans- C) American Standard Code for Information Interchange
+
+15. Java is case sensitive langauge
+Ans-a)True 
+
+16. What is the error in this code?
+byte b = 50;
+b = b * 50;
+This problem has only one correct answer
+Ans- a)b can not contain value 2500, limited by its range.
+
+17. public class  Solution{
+    public static void main(String [] args)  {
+        double a = 6 / 4; 
+        int b  = 6 / 4;
+        double c = a + b;
+        System.out.println(c);
+    }
+}
+Ans- b)2.0
+
+18. public class  Solution{
+    public static void main(String [] args)  {
+        double a = 55.5;
+        int b = 55;
+        a = a % 10;
+        b = b % 10;
+        System.out.println(a + " "  + b);
+      }
+}
+Ans- b)5.55
+
+19. public class  Solution {
+    public static void main(String [] args)  {
+        int var1 = 5;
+        int var2 = 6;
+        System.out.print(var1 > var2);
+    }
+}
+Ans- b) false
+
+if else
+
+20. public static void main(String args[])
+{
+    int a=10,b=15;
+    if(a>b)
+    {
+        System.out.print("a ");
+    }
+    else
+    {
+        System.out.print("b ");
+    }
+    System.out.print("is greater");
+}
+Ans- b)b
+
+21. public static void main(String args[])
+{
+        int x = 5;
+        if (x < 6)
+            System.out.print("Hello  ");
+        if(x == 5){
+            System.out.print("Hi  ");
+        }
+        else{
+            System.out.print("Hey ");
+        }
+}
+Ans- Hello  Hi
+
+22. public static void main(String args[])
+    {
+        int var1 = 5;
+        int var2 = 6;
+        if ((var2 = 1) == var1)
+            System.out.print(var2);
+        else
+            System.out.print(var2 + 1);
+    }   
+
+Let a and b are the two integers. Which option can be used to check out that one of the numbers is positive and the other is negative?
+Ans- c) a<0 || b<0
+
+
+23. public static void main (String[] args) {
+  int i=0;
+  while(i<10)
+  {
+      i=i+1;
+      System.out.print(i);
+      i=i+1;
+  }
+}
+Ans- 13579
+
+24. main() {
+    int a=50,b=20;
+    if(a>b)
+    {
+        if(a>100)
+            print ("Ace");
+        if(b<100)
+            b=50;
+    }
+    else if(a==b)
+    {
+      print ("King");
+    }
+    else
+    {
+        print ("Queen");
+    }
+}
+Ans- Queen
