@@ -44,3 +44,67 @@ static Pair getMinMax(long a[], long n) {
 
 3. First and last occurrences of x
 code:
+import java.util.ArrayList;
+
+class GFG
+{
+    ArrayList<Long> find(long arr[], int n, int x)
+    {
+        ArrayList<Long> result = new ArrayList<>();
+        
+        // Initialize variables to store the first and last occurrences of x
+        long firstOccurrence = binarySearchFirstOccurrence(arr, 0, n - 1, x);
+        long lastOccurrence = binarySearchLastOccurrence(arr, 0, n - 1, x);
+
+        result.add(firstOccurrence);
+        result.add(lastOccurrence);
+
+        return result;
+    }
+
+    // Binary search to find the first occurrence of x in the array
+    private long binarySearchFirstOccurrence(long arr[], int left, int right, int x) {
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+
+            if (arr[mid] == x) {
+                // If the current element is equal to x, check if it's the first occurrence
+                if (mid == 0 || arr[mid - 1] < x) {
+                    return mid;
+                } else {
+                    right = mid - 1;
+                }
+            } else if (arr[mid] < x) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+        return -1;
+    }
+
+    // Binary search to find the last occurrence of x in the array
+    private long binarySearchLastOccurrence(long arr[], int left, int right, int x) {
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+
+            if (arr[mid] == x) {
+                // If the current element is equal to x, check if it's the last occurrence
+                if (mid == right || arr[mid + 1] > x) {
+                    return mid;
+                } else {
+                    left = mid + 1;
+                }
+            } else if (arr[mid] < x) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+        return -1;
+    }
+}
+
+4. Search an Element in an array
+Code:
+ 
