@@ -107,4 +107,14 @@ class GFG
 
 4. Search an Element in an array
 Code:
- 
+ class Solution {
+    static int search(int arr[], int N, int X) {
+        for (int i = 0; i < N; i++) {
+            if (arr[i] == X) {
+                return i; // Return the index of the first occurrence of X
+            }
+        }
+        return -1; // X is not found in the array
+    }
+}
+
