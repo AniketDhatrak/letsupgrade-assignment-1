@@ -1,0 +1,43 @@
+1. Largest Element in Array
+code:
+public static int largest(int[] arr, int n) {
+    if (n == 0) {
+        // If the array is empty, return a suitable value (e.g., -1 or throw an exception)
+        return -1;
+    }
+
+    int max = arr[0]; // Initialize max with the first element of the array
+
+    for (int i = 1; i < n; i++) {
+        if (arr[i] > max) {
+            max = arr[i]; // Update max if a larger element is found
+        }
+    }
+
+    return max; // Return the maximum element
+}
+
+
+
+2. Find minimum and maximum element in an array
+code:
+static Pair getMinMax(long a[], long n) {
+    if (n == 0) {
+        // If the array is empty, return a suitable value (e.g., null or throw an exception)
+        return null;
+    }
+
+    long min = a[0]; // Initialize min with the first element of the array
+    long max = a[0]; // Initialize max with the first element of the array
+
+    for (int i = 1; i < n; i++) {
+        if (a[i] < min) {
+            min = a[i]; // Update min if a smaller element is found
+        }
+        if (a[i] > max) {
+            max = a[i]; // Update max if a larger element is found
+        }
+    }
+
+    return new Pair(min, max); // Return the Pair with min and max elements
+}
