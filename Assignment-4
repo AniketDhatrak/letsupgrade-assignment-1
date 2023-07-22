@@ -41,3 +41,6 @@ static Pair getMinMax(long a[], long n) {
 
     return new Pair(min, max); // Return the Pair with min and max elements
 }
+
+3. First and last occurrences of x
+code:
