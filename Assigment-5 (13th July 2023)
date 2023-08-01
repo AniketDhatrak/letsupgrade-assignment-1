@@ -1,0 +1,163 @@
+1. Equilibrium Index Element :
+code-
+import java.util.Scanner;
+
+public class Solution {
+    public int solve(int[] A) {
+        int n = A.length;
+        int specialCount = 0;
+
+        int[] evenPrefixSum = new int[n + 1];
+        int[] oddPrefixSum = new int[n + 1];
+        for (int i = 0; i < n; i++) {
+            evenPrefixSum[i + 1] = evenPrefixSum[i] + (i % 2 == 0 ? A[i] : 0);
+            oddPrefixSum[i + 1] = oddPrefixSum[i] + (i % 2 != 0 ? A[i] : 0);
+        }
+
+        for (int i = 0; i < n; i++) {
+           int currentEvenSum = evenPrefixSum[i] + (oddPrefixSum[n] - oddPrefixSum[i + 1]);
+            int currentOddSum = oddPrefixSum[i] + (evenPrefixSum[n] - evenPrefixSum[i + 1]);
+
+            if (currentEvenSum == currentOddSum) {
+                specialCount++;
+            }
+        }
+
+        return specialCount;
+    }
+
+2. Pick from both sides!:
+code-
+import java.util.Scanner;
+
+public class Solution {
+    public int solve(int[] A, int B) {
+        int n = A.length;
+
+        int currentSum = 0;
+        for (int i = 0; i < B; i++) {
+            currentSum += A[i];
+        }
+
+        int maxSum = currentSum;
+
+        for (int i = B; i < n; i++) {
+            currentSum += A[i] - A[i - B];
+
+            // Update the maxSum if the currentSum is greater
+            maxSum = Math.max(maxSum, currentSum);
+        }
+
+        return maxSum;
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        Solution solution = new Solution();
+
+        int n = scanner.nextInt();
+        int[] A = new int[n];
+
+        for (int i = 0; i < n; i++) {
+            A[i] = scanner.nextInt();
+        }
+
+        int B = scanner.nextInt();
+
+        int result = solution.solve(A, B);
+        System.out.println( result);
+    }
+}
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        Solution solution = new Solution();
+
+        int n = scanner.nextInt();
+        int[] A = new int[n];
+
+        for (int i = 0; i < n; i++) {
+            A[i] = scanner.nextInt();
+        }
+
+        int result = solution.solve(A);
+        System.out.println(result);
+    }
+}
+
+3. https://leetcode.com/problems/minimum-operations-to-make-array-equal/
+code-
+import java.util.Scanner;
+
+public class Solution {
+    public int minOperations(int n) {
+        int target = (n % 2 == 0) ? (n * n) / 4 : ((n * n) - 1) / 4;
+
+        int minOperations = 0;
+
+        for (int i = 0; i < n / 2; i++) {
+            int element = (2 * i) + 1;
+            minOperations += Math.abs(element - target);
+        }
+
+        return minOperations;
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        Solution solution = new Solution();
+        
+        int n = scanner.nextInt();
+
+        int result = solution.minOperations(n);
+        System.out.println(result);
+    }
+}
+
+
+4. 303. Range Sum Query - Immutable : https://leetcode.com/problems/range-sum-query-immutable/'
+code-
+import java.util.Scanner;
+
+public class NumArray {
+    private int[] prefixSum;
+
+    public NumArray(int[] nums) {
+        int n = nums.length;
+        prefixSum = new int[n];
+
+        prefixSum[0] = nums[0];
+        for (int i = 1; i < n; i++) {
+            prefixSum[i] = prefixSum[i - 1] + nums[i];
+        }
+    }
+
+    public int sumRange(int left, int right) {
+        if (left == 0) {
+            return prefixSum[right];
+        }
+
+        return prefixSum[right] - prefixSum[left - 1];
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        int n = scanner.nextInt();
+        int[] nums = new int[n];
+
+        for (int i = 0; i < n; i++) {
+            nums[i] = scanner.nextInt();
+        }
+
+        NumArray numArray = new NumArray(nums);
+
+        int left = scanner.nextInt();
+
+        int right = scanner.nextInt();
+
+        int result = numArray.sumRange(left, right);
+        System.out.println(result);
+    }
+}
+
