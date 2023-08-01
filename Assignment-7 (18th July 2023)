@@ -142,7 +142,189 @@ public class Solution {
 
 
 867. Transpose Matrix : https://leetcode.com/problems/transpose-matrix/
+code-
+import java.util.Scanner;
+
+public class Solution {
+    public int[][] transpose(int[][] matrix) {
+        int m = matrix.length;
+        int n = matrix[0].length;
+        int[][] transposedMatrix = new int[n][m];
+
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                transposedMatrix[j][i] = matrix[i][j];
+            }
+        }
+
+        return transposedMatrix;
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        int m = scanner.nextInt();
+        int n = scanner.nextInt();
+
+        int[][] matrix = new int[m][n];
+
+       
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                matrix[i][j] = scanner.nextInt();
+            }
+        }
+
+        Solution solution = new Solution();
+        int[][] transposedMatrix = solution.transpose(matrix);
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                System.out.print(transposedMatrix[i][j] + " ");
+            }
+            System.out.println();
+        }
+    }
+}
+
 
 73. Set Matrix Zeroes : https://leetcode.com/problems/set-matrix-zeroes/
+code-
+import java.util.Scanner;
+
+public class Solution {
+    public void setZeroes(int[][] matrix) {
+        int m = matrix.length;
+        int n = matrix[0].length;
+
+        boolean firstRowHasZero = false;
+        boolean firstColumnHasZero = false;
+
+        for (int i = 0; i < m; i++) {
+            if (matrix[i][0] == 0) {
+                firstColumnHasZero = true;
+                break;
+            }
+        }
+
+        for (int j = 0; j < n; j++) {
+            if (matrix[0][j] == 0) {
+                firstRowHasZero = true;
+                break;
+            }
+        }
+
+        for (int i = 1; i < m; i++) {
+            for (int j = 1; j < n; j++) {
+                if (matrix[i][j] == 0) {
+                    matrix[i][0] = 0;
+                    matrix[0][j] = 0;
+                }
+            }
+        }
+
+        for (int i = 1; i < m; i++) {
+            for (int j = 1; j < n; j++) {
+                if (matrix[i][0] == 0 || matrix[0][j] == 0) {
+                    matrix[i][j] = 0;
+                }
+            }
+        }
+
+        if (firstRowHasZero) {
+            for (int j = 0; j < n; j++) {
+                matrix[0][j] = 0;
+            }
+        }
+
+        if (firstColumnHasZero) {
+            for (int i = 0; i < m; i++) {
+                matrix[i][0] = 0;
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        int m = scanner.nextInt();
+        int n = scanner.nextInt();
+
+        int[][] matrix = new int[m][n];
+
+       
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                matrix[i][j] = scanner.nextInt();
+            }
+        }
+
+        Solution solution = new Solution();
+        solution.setZeroes(matrix);
+
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                System.out.print(matrix[i][j] + " ");
+            }
+            System.out.println();
+        }
+    }
+}
+
 
 1424. Diagonal Traverse II : https://leetcode.com/problems/diagonal-traverse-ii/
+code-
+import java.util.*;
+
+public class Solution {
+    public int[] findDiagonalOrder(List<List<Integer>> nums) {
+        Map<Integer, List<Integer>> diagonalMap = new HashMap<>();
+        int maxKey = 0;
+
+        for (int i = 0; i < nums.size(); i++) {
+            for (int j = 0; j < nums.get(i).size(); j++) {
+                int key = i + j;
+                diagonalMap.putIfAbsent(key, new ArrayList<>());
+                diagonalMap.get(key).add(nums.get(i).get(j));
+                maxKey = Math.max(maxKey, key);
+            }
+        }
+
+        List<Integer> result = new ArrayList<>();
+
+        for (int key = 0; key <= maxKey; key++) {
+            List<Integer> diagonal = diagonalMap.get(key);
+            if (diagonal != null) {
+                for (int i = diagonal.size() - 1; i >= 0; i--) {
+                    result.add(diagonal.get(i));
+                }
+            }
+        }
+
+        return result.stream().mapToInt(Integer::intValue).toArray();
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        int m = scanner.nextInt();
+
+        List<List<Integer>> nums = new ArrayList<>();
+
+        for (int i = 0; i < m; i++) {
+            List<Integer> row = new ArrayList<>();
+            int numCols = scanner.nextInt();
+            for (int j = 0; j < numCols; j++) {
+                row.add(scanner.nextInt());
+            }
+            nums.add(row);
+        }
+
+        Solution solution = new Solution();
+        int[] result = solution.findDiagonalOrder(nums);
+
+        for (int i = 0; i < result.length; i++) {
+            System.out.print(result[i] + " ");
+        }
+    }
+}
