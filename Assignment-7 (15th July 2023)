@@ -1,0 +1,129 @@
+1. https://leetcode.com/problems/continuous-subarray-sum/
+code-
+import java.util.*;
+
+public class Solution {
+    public boolean checkSubarraySum(int[] nums, int k) {
+        Map<Integer, Integer> remainderMap = new HashMap<>();
+        remainderMap.put(0, -1);
+        int sum = 0;
+
+        for (int i = 0; i < nums.length; i++) {
+            sum += nums[i];
+
+            if (k != 0)
+                sum %= k;
+
+            if (remainderMap.containsKey(sum)) {
+                if (i - remainderMap.get(sum) > 1)
+                    return true;
+            } else {
+                remainderMap.put(sum, i);
+            }
+        }
+
+        return false;
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        int n = scanner.nextInt();
+        int[] nums = new int[n];
+
+        for (int i = 0; i < n; i++) {
+            nums[i] = scanner.nextInt();
+        }
+
+        int k = scanner.nextInt();
+
+        Solution solution = new Solution();
+        boolean result = solution.checkSubarraySum(nums, k);
+
+        System.out.println(result);
+    }
+}
+
+2. https://practice.geeksforgeeks.org/problems/subarray-with-least-average5031/1
+code-
+class Solution
+{
+    public int least_average(int[] nums, int k)
+    {
+        int n = nums.length;
+
+        // Initialize the sum of the first window of size k
+        int windowSum = 0;
+        for (int i = 0; i < k; i++) {
+            windowSum += nums[i];
+        }
+
+        // Initialize the minimum average and its index
+        int minAverage = windowSum;
+        int minAverageIndex = 0;
+
+        // Calculate the sum of subsequent windows and find the minimum average
+        for (int i = k; i < n; i++) {
+            windowSum += nums[i] - nums[i - k];
+            if (windowSum < minAverage) {
+                minAverage = windowSum;
+                minAverageIndex = i - k + 1;
+            }
+        }
+
+        // Return the index of the first element of the subarray with least average
+        return minAverageIndex + 1; // 1-based indexing
+    }
+}
+
+3. https://practice.geeksforgeeks.org/problems/sum-of-subarrays2229/1
+code-
+
+
+class Solution {
+    public static long subarraySum(long a[], long n) {
+        long MOD = 1000000007;
+        long sum = 0;
+
+        // Calculate the sum of all subarrays
+        for (int i = 0; i < n; i++) {
+            sum = (sum + a[i] * (i + 1) * (n - i)) % MOD;
+        }
+
+        return sum;
+    }
+}
+
+4. https://leetcode.com/problems/maximum-subarray/
+code-
+import java.util.Scanner;
+
+class Solution {
+    public int maxSubArray(int[] nums) {
+        int maxSum = Integer.MIN_VALUE;
+        int currentSum = 0;
+
+        for (int num : nums) {
+            currentSum = Math.max(num, currentSum + num);
+            maxSum = Math.max(maxSum, currentSum);
+        }
+
+        return maxSum;
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        int n = scanner.nextInt();
+        int[] nums = new int[n];
+
+        for (int i = 0; i < n; i++) {
+            nums[i] = scanner.nextInt();
+        }
+
+        Solution solution = new Solution();
+        int result = solution.maxSubArray(nums);
+
+        System.out.println("Output: " + result);
+    }
+}
