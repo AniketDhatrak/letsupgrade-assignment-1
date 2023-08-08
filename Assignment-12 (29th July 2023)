@@ -153,7 +153,8 @@ class Solution {
             arr[i] = scanner.nextLong();
         }
 
-        System.out.println("Are elements consecutive? " + solution.areConsecutives(arr, N));
+        boolean areConsecutive = solution.areConsecutives(arr, N);
+        System.out.println("Are elements consecutive? " + (areConsecutive ? "Yes" : "No"));
 
         scanner.close();
     }
@@ -161,12 +162,257 @@ class Solution {
 
 4. https://practice.geeksforgeeks.org/problems/chocolate-distribution-problem3825/1
 code-
+class Solution {
+    public long findMinDiff(ArrayList<Integer> a, int n, int m) {
+        if (m == 0 || n == 0) {
+            return 0;
+        }
+
+        Collections.sort(a);
+
+        if (n < m) {
+            return -1;
+        }
+
+        long minDiff = Long.MAX_VALUE;
+
+        for (int i = 0; i + m - 1 < n; i++) {
+            int diff = a.get(i + m - 1) - a.get(i);
+            minDiff = Math.min(minDiff, diff);
+        }
+
+        return minDiff;
+    }
+
+    public static void main(String[] args) {
+        Solution solution = new Solution();
+
+        Scanner scanner = new Scanner(System.in);
+
+        int n = scanner.nextInt();
+
+        ArrayList<Integer> a = new ArrayList<>();
+        for (int i = 0; i < n; i++) {
+            a.add(scanner.nextInt());
+        }
+
+        int m = scanner.nextInt();
+
+        long minDiff = solution.findMinDiff(a, n, m);
+        System.out.println(minDiff);
+
+        scanner.close();
+    }
+}
 
 5. https://leetcode.com/problems/sort-an-array/description/
 code-
+import java.util.Scanner;
+
+class Solution {
+    public int[] sortArray(int[] nums) {
+        mergeSort(nums, 0, nums.length - 1);
+        return nums;
+    }
+
+    public void merge(int[] arr, int left, int mid, int right) {
+        int n1 = mid - left + 1;
+        int n2 = right - mid;
+
+        int[] L = new int[n1];
+        int[] R = new int[n2];
+
+        for (int i = 0; i < n1; i++) {
+            L[i] = arr[left + i];
+        }
+        for (int j = 0; j < n2; j++) {
+            R[j] = arr[mid + 1 + j];
+        }
+
+        int i = 0, j = 0, k = left;
+
+        while (i < n1 && j < n2) {
+            if (L[i] <= R[j]) {
+                arr[k] = L[i];
+                i++;
+            } else {
+                arr[k] = R[j];
+                j++;
+            }
+            k++;
+        }
+
+        while (i < n1) {
+            arr[k] = L[i];
+            i++;
+            k++;
+        }
+
+        while (j < n2) {
+            arr[k] = R[j];
+            j++;
+            k++;
+        }
+    }
+
+    public void mergeSort(int[] arr, int left, int right) {
+        if (left < right) {
+            int mid = left + (right - left) / 2;
+            mergeSort(arr, left, mid);
+            mergeSort(arr, mid + 1, right);
+            merge(arr, left, mid, right);
+        }
+    }
+
+    public static void main(String[] args) {
+        Solution solution = new Solution();
+
+        Scanner scanner = new Scanner(System.in);
+
+        int n = scanner.nextInt();
+
+        int[] nums = new int[n];
+        for (int i = 0; i < n; i++) {
+            nums[i] = scanner.nextInt();
+        }
+
+        int[] sortedArray = solution.sortArray(nums);
+
+        for (int num : sortedArray) {
+            System.out.print(num + " ");
+        }
+
+        scanner.close();
+    }
+}
 
 6. https://leetcode.com/problems/sort-colors/description/
 code-
+import java.util.Scanner;
+
+class Solution {
+    public void sortColors(int[] nums) {
+        int low = 0, mid = 0, high = nums.length - 1;
+
+        while (mid <= high) {
+            if (nums[mid] == 0) {
+                swap(nums, low, mid);
+                low++;
+                mid++;
+            } else if (nums[mid] == 1) {
+                mid++;
+            } else {
+                swap(nums, mid, high);
+                high--;
+            }
+        }
+    }
+
+    public void swap(int[] nums, int i, int j) {
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
+    }
+
+    public static void main(String[] args) {
+        Solution solution = new Solution();
+
+        Scanner scanner = new Scanner(System.in);
+
+        int n = scanner.nextInt();
+
+        int[] nums = new int[n];
+        for (int i = 0; i < n; i++) {
+            nums[i] = scanner.nextInt();
+        }
+
+        solution.sortColors(nums);
+
+        for (int num : nums) {
+            System.out.print(num + " ");
+        }
+
+        scanner.close();
+    }
+}
 
 7. https://leetcode.com/problems/sort-an-array/description/
 code-
+import java.util.Scanner;
+
+class Solution {
+    public int[] sortArray(int[] nums) {
+        mergeSort(nums, 0, nums.length - 1);
+        return nums;
+    }
+
+    public void merge(int[] arr, int left, int mid, int right) {
+        int n1 = mid - left + 1;
+        int n2 = right - mid;
+
+        int[] L = new int[n1];
+        int[] R = new int[n2];
+
+        for (int i = 0; i < n1; i++) {
+            L[i] = arr[left + i];
+        }
+        for (int j = 0; j < n2; j++) {
+            R[j] = arr[mid + 1 + j];
+        }
+
+        int i = 0, j = 0, k = left;
+
+        while (i < n1 && j < n2) {
+            if (L[i] <= R[j]) {
+                arr[k] = L[i];
+                i++;
+            } else {
+                arr[k] = R[j];
+                j++;
+            }
+            k++;
+        }
+
+        while (i < n1) {
+            arr[k] = L[i];
+            i++;
+            k++;
+        }
+
+        while (j < n2) {
+            arr[k] = R[j];
+            j++;
+            k++;
+        }
+    }
+
+    public void mergeSort(int[] arr, int left, int right) {
+        if (left < right) {
+            int mid = left + (right - left) / 2;
+            mergeSort(arr, left, mid);
+            mergeSort(arr, mid + 1, right);
+            merge(arr, left, mid, right);
+        }
+    }
+
+    public static void main(String[] args) {
+        Solution solution = new Solution();
+
+        Scanner scanner = new Scanner(System.in);
+
+        int n = scanner.nextInt();
+
+        int[] nums = new int[n];
+        for (int i = 0; i < n; i++) {
+            nums[i] = scanner.nextInt();
+        }
+
+        int[] sortedArray = solution.sortArray(nums);
+
+        for (int num : sortedArray) {
+            System.out.print(num + " ");
+        }
+
+        scanner.close();
+    }
+}
