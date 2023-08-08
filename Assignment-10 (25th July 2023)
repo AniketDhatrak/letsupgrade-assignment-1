@@ -1,0 +1,107 @@
+1.  Fibonacci Number : https://leetcode.com/problems/fibonacci-number/
+code-
+import java.util.Scanner;
+
+class Solution {
+    public int fib(int n) {
+        if (n <= 1) {
+            return n;
+        }
+
+        int[] fibArray = new int[n + 1];
+        fibArray[0] = 0;
+        fibArray[1] = 1;
+
+        for (int i = 2; i <= n; i++) {
+            fibArray[i] = fibArray[i - 1] + fibArray[i - 2];
+        }
+
+        return fibArray[n];
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        int n = scanner.nextInt();
+
+        Solution solution = new Solution();
+        int result = solution.fib(n);
+
+        System.out.println(result);
+    }
+}
+
+2. Given a number A, we need to find the sum of its digits using recursion.
+code-
+import java.util.Scanner;
+
+public class Solution {
+    public int sumOfDigits(int A) {
+        if (A == 0) {
+            return 0;
+        }
+        return A % 10 + sumOfDigits(A / 10);
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter a number: ");
+        int A = scanner.nextInt();
+
+        Solution solution = new Solution();
+        int result = solution.sumOfDigits(A);
+
+        System.out.println("Sum of digits: " + result);
+    }
+}
+
+3. Write a program to find the factorial of the given number A using recursion.
+code-
+import java.util.Scanner;
+
+public class Solution {
+    public int factorial(int A) {
+        if (A <= 1) {
+            return 1;
+        }
+        return A * factorial(A - 1);
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter a number: ");
+        int A = scanner.nextInt();
+
+        Solution solution = new Solution();
+        int result = solution.factorial(A);
+
+        System.out.println("Factorial: " + result);
+    }
+}
+
+4. Write a recursive function that takes a string, S, as input and prints the characters of S in reverse order.
+code-
+import java.util.Scanner;
+
+public class Solution {
+    public void reverseString(String str) {
+        if (str == null || str.isEmpty()) {
+            return;
+        }
+        System.out.print(str.charAt(str.length() - 1));
+        reverseString(str.substring(0, str.length() - 1));
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter a string: ");
+        String str = scanner.nextLine();
+
+        Solution solution = new Solution();
+        System.out.print("Reversed string: ");
+        solution.reverseString(str);
+    }
+}
