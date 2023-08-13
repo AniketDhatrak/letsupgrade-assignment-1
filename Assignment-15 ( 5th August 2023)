@@ -1,0 +1,344 @@
+1. https://leetcode.com/problems/search-insert-position/
+code-
+import java.util.Scanner;
+
+class Solution {
+    public int searchInsert(int[] nums, int target) {
+        int left = 0;
+        int right = nums.length - 1;
+
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            if (nums[mid] == target) {
+                return mid;
+            } else if (nums[mid] < target) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+
+        return left;
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        int n = scanner.nextInt();
+
+        int[] nums = new int[n];
+        for (int i = 0; i < n; i++) {
+            nums[i] = scanner.nextInt();
+        }
+
+        int target = scanner.nextInt();
+
+        Solution solution = new Solution();
+        int index = solution.searchInsert(nums, target);
+
+        System.out.println(index);
+
+        scanner.close();
+    }
+}
+
+2.https://leetcode.com/problems/find-peak-element/
+code-
+import java.util.Scanner;
+
+class Solution {
+    public int findPeakElement(int[] nums) {
+        int left = 0;
+        int right = nums.length - 1;
+
+        while (left < right) {
+            int mid = left + (right - left) / 2;
+            if (nums[mid] < nums[mid + 1]) {
+                left = mid + 1;
+            } else {
+                right = mid;
+            }
+        }
+
+        return left;
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        int n = scanner.nextInt();
+
+        int[] nums = new int[n];
+        for (int i = 0; i < n; i++) {
+            nums[i] = scanner.nextInt();
+        }
+
+        Solution solution = new Solution();
+        int peakIndex = solution.findPeakElement(nums);
+
+        System.out.println(peakIndex);
+
+        scanner.close();
+    }
+}
+
+3. https://leetcode.com/problems/search-in-rotated-sorted-array/
+code-
+import java.util.Scanner;
+
+class Solution {
+    public int search(int[] nums, int target) {
+        int left = 0;
+        int right = nums.length - 1;
+
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            if (nums[mid] == target) {
+                return mid;
+            }
+
+            if (nums[left] <= nums[mid]) {
+                if (nums[left] <= target && target < nums[mid]) {
+                    right = mid - 1;
+                } else {
+                    left = mid + 1;
+                }
+            } else {
+                if (nums[mid] < target && target <= nums[right]) {
+                    left = mid + 1;
+                } else {
+                    right = mid - 1;
+                }
+            }
+        }
+
+        return -1;
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        int n = scanner.nextInt();
+
+        int[] nums = new int[n];
+        for (int i = 0; i < n; i++) {
+            nums[i] = scanner.nextInt();
+        }
+
+        int target = scanner.nextInt();
+
+        Solution solution = new Solution();
+        int result = solution.search(nums, target);
+
+        System.out.println(result);
+
+        scanner.close();
+    }
+}
+
+4. https://leetcode.com/problems/search-a-2d-matrix/
+code-
+class Solution {
+    public boolean searchMatrix(int[][] matrix, int target) {
+        int m = matrix.length;
+        int n = matrix[0].length;
+        int left = 0;
+        int right = m * n - 1;
+
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            int midValue = matrix[mid / n][mid % n];
+
+            if (midValue == target) {
+                return true;
+            } else if (midValue < target) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+
+        return false;
+    }
+}
+
+5. https://leetcode.com/problems/median-of-two-sorted-arrays/
+code-
+import java.util.Scanner;
+
+class Solution {
+    public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+        int m = nums1.length;
+        int n = nums2.length;
+        
+        if (m > n) {
+            return findMedianSortedArrays(nums2, nums1);
+        }
+        
+        int left = 0;
+        int right = m;
+        
+        while (left <= right) {
+            int partitionX = left + (right - left) / 2;
+            int partitionY = (m + n + 1) / 2 - partitionX;
+            
+            int maxX = (partitionX == 0) ? Integer.MIN_VALUE : nums1[partitionX - 1];
+            int maxY = (partitionY == 0) ? Integer.MIN_VALUE : nums2[partitionY - 1];
+            
+            int minX = (partitionX == m) ? Integer.MAX_VALUE : nums1[partitionX];
+            int minY = (partitionY == n) ? Integer.MAX_VALUE : nums2[partitionY];
+            
+            if (maxX <= minY && maxY <= minX) {
+                if ((m + n) % 2 == 0) {
+                    return (double) (Math.max(maxX, maxY) + Math.min(minX, minY)) / 2;
+                } else {
+                    return (double) Math.max(maxX, maxY);
+                }
+            } else if (maxX > minY) {
+                right = partitionX - 1;
+            } else {
+                left = partitionX + 1;
+            }
+        }
+        
+        throw new IllegalArgumentException("Input arrays are not sorted.");
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        int m = scanner.nextInt();
+        int[] nums1 = new int[m];
+        for (int i = 0; i < m; i++) {
+            nums1[i] = scanner.nextInt();
+        }
+
+        int n = scanner.nextInt();
+        int[] nums2 = new int[n];
+        for (int i = 0; i < n; i++) {
+            nums2[i] = scanner.nextInt();
+        }
+
+        Solution solution = new Solution();
+        double result = solution.findMedianSortedArrays(nums1, nums2);
+
+        System.out.println(result);
+
+        scanner.close();
+    }
+}
+
+6.https://www.interviewbit.com/problems/matrix-median/
+code-
+public class Solution {
+    public int findMedian(int[][] A) {
+        int rows = A.length;
+        int cols = A[0].length;
+
+        int min = Integer.MAX_VALUE, max = Integer.MIN_VALUE;
+        for (int i = 0; i < rows; i++) {
+            min = Math.min(min, A[i][0]);
+            max = Math.max(max, A[i][cols - 1]);
+        }
+
+        int desiredCount = (rows * cols + 1) / 2;
+        while (min < max) {
+            int mid = min + (max - min) / 2;
+            int count = 0;
+
+            for (int i = 0; i < rows; i++) {
+                count += upperBound(A[i], mid);
+            }
+
+            if (count < desiredCount) {
+                min = mid + 1;
+            } else {
+                max = mid;
+            }
+        }
+
+        return min;
+    }
+
+    private int upperBound(int[] arr, int target) {
+        int low = 0, high = arr.length;
+        while (low < high) {
+            int mid = low + (high - low) / 2;
+            if (arr[mid] <= target) {
+                low = mid + 1;
+            } else {
+                high = mid;
+            }
+        }
+        return low;
+    }
+}
+
+7.https://practice.geeksforgeeks.org/problems/number-of-occurrence2259/1?utm_source=gfg&utm_medium=article&utm_campaign=bottom_sticky_on_article
+code-
+class Solution {
+    int count(int[] arr, int n, int x) {
+        int firstOccurrence = findFirstOccurrence(arr, n, x);
+        if (firstOccurrence == -1) {
+            return 0;
+        }
+        
+        int lastOccurrence = findLastOccurrence(arr, n, x);
+        return lastOccurrence - firstOccurrence + 1;
+    }
+    
+    int findFirstOccurrence(int[] arr, int n, int x) {
+        int low = 0, high = n - 1, result = -1;
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+            if (arr[mid] == x) {
+                result = mid;
+                high = mid - 1;
+            } else if (arr[mid] < x) {
+                low = mid + 1;
+            } else {
+                high = mid - 1;
+            }
+        }
+        return result;
+    }
+    
+    int findLastOccurrence(int[] arr, int n, int x) {
+        int low = 0, high = n - 1, result = -1;
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+            if (arr[mid] == x) {
+                result = mid;
+                low = mid + 1;
+            } else if (arr[mid] < x) {
+                low = mid + 1;
+            } else {
+                high = mid - 1;
+            }
+        }
+        return result;
+    }
+}
+
+8. https://practice.geeksforgeeks.org/problems/floor-in-a-sorted-array-1587115620/1
+code-
+class Solution {
+    static int findFloor(long arr[], int n, long x) {
+        int low = 0, high = n - 1, result = -1;
+        
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+            
+            if (arr[mid] == x) {
+                return mid;
+            } else if (arr[mid] < x) {
+                result = mid;
+                low = mid + 1;
+            } else {
+                high = mid - 1;
+            }
+        }
+        
+        return result;
+    }
+}
