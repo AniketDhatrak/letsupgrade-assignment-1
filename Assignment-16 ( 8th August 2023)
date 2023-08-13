@@ -1,0 +1,132 @@
+1.https://leetcode.com/problems/sqrtx/
+code-
+class Solution {
+    public int mySqrt(int x) {
+        if (x == 0) {
+            return 0;
+        }
+        
+        int left = 1, right = x;
+        int result = 0;
+        
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            
+            if (mid <= x / mid) {
+                result = mid;
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+        
+        return result;
+    }
+}
+
+2. https://leetcode.com/problems/search-in-rotated-sorted-array/
+code-
+import java.util.Scanner;
+
+class Solution {
+    public int search(int[] nums, int target) {
+        int left = 0;
+        int right = nums.length - 1;
+
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            if (nums[mid] == target) {
+                return mid;
+            }
+
+            if (nums[left] <= nums[mid]) {
+                if (nums[left] <= target && target < nums[mid]) {
+                    right = mid - 1;
+                } else {
+                    left = mid + 1;
+                }
+            } else {
+                if (nums[mid] < target && target <= nums[right]) {
+                    left = mid + 1;
+                } else {
+                    right = mid - 1;
+                }
+            }
+        }
+
+        return -1;
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        int n = scanner.nextInt();
+
+        int[] nums = new int[n];
+        for (int i = 0; i < n; i++) {
+            nums[i] = scanner.nextInt();
+        }
+
+        int target = scanner.nextInt();
+
+        Solution solution = new Solution();
+        int result = solution.search(nums, target);
+
+        System.out.println(result);
+
+        scanner.close();
+    }
+}
+
+3. https://leetcode.com/problems/minimum-size-subarray-sum/
+code-
+class Solution {
+    public int minSubArrayLen(int target, int[] nums) {
+        int minLength = Integer.MAX_VALUE;
+        int left = 0, sum = 0;
+        
+        for (int right = 0; right < nums.length; right++) {
+            sum += nums[right];
+            
+            while (sum >= target) {
+                minLength = Math.min(minLength, right - left + 1);
+                sum -= nums[left];
+                left++;
+            }
+        }
+        
+        return minLength == Integer.MAX_VALUE ? 0 : minLength;
+    }
+}
+
+4. https://leetcode.com/problems/nth-magical-number/
+code-
+class Solution {
+    public int nthMagicalNumber(int n, int a, int b) {
+        int MOD = 1_000_000_007;
+        long lcm = (long)a * b / gcd(a, b);
+        long left = 1, right = (long)Math.min(a, b) * n;
+        
+        while (left < right) {
+            long mid = left + (right - left) / 2;
+            long count = mid / a + mid / b - mid / lcm;
+            
+            if (count < n) {
+                left = mid + 1;
+            } else {
+                right = mid;
+            }
+        }
+        
+        return (int)(left % MOD);
+    }
+    
+    private long gcd(long a, long b) {
+        while (b > 0) {
+            long temp = b;
+            b = a % b;
+            a = temp;
+        }
+        return a;
+    }
+}
