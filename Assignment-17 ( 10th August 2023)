@@ -1,0 +1,218 @@
+1. https://www.interviewbit.com/problems/search-in-bitonic-array/
+code-
+public class Solution {
+    public int solve(int[] A, int B) {
+        int peak = findPeakIndex(A);
+        int leftSearch = binarySearchAscending(A, B, 0, peak);
+        if (leftSearch != -1) {
+            return leftSearch;
+        }
+        int rightSearch = binarySearchDescending(A, B, peak + 1, A.length - 1);
+        return rightSearch;
+    }
+    
+    private int findPeakIndex(int[] A) {
+        int left = 0, right = A.length - 1;
+        while (left < right) {
+            int mid = left + (right - left) / 2;
+            if (A[mid] < A[mid + 1]) {
+                left = mid + 1;
+            } else {
+                right = mid;
+            }
+        }
+        return left;
+    }
+    
+    private int binarySearchAscending(int[] A, int target, int left, int right) {
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            if (A[mid] == target) {
+                return mid;
+            } else if (A[mid] < target) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+        return -1;
+    }
+    
+    private int binarySearchDescending(int[] A, int target, int left, int right) {
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            if (A[mid] == target) {
+                return mid;
+            } else if (A[mid] > target) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+        return -1;
+    }
+}
+
+2. https://leetcode.com/discuss/general-discussion/1302335/aggressive-cows-spoj-fully-explained-c
+code-
+import java.util.*;
+
+public class Solution {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int n = scanner.nextInt();
+        int k = scanner.nextInt();
+        int[] stalls = new int[n];
+        for (int i = 0; i < n; i++) {
+            stalls[i] = scanner.nextInt();
+        }
+        int result = aggressiveCows(stalls, k);
+        System.out.println(result);
+    }
+    
+    public static boolean isPossible(int[] stalls, int minDist, int k) {
+        int cows = 1;
+        int lastCowPosition = stalls[0];
+        for (int i = 1; i < stalls.length; i++) {
+            if (stalls[i] - lastCowPosition >= minDist) {
+                cows++;
+                lastCowPosition = stalls[i];
+                if (cows >= k) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public static int aggressiveCows(int[] stalls, int k) {
+        Arrays.sort(stalls);
+        int low = 1;
+        int high = stalls[stalls.length - 1] - stalls[0];
+        int res = 0;
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+            if (isPossible(stalls, mid, k)) {
+                res = mid;
+                low = mid + 1;
+            } else {
+                high = mid - 1;
+            }
+        }
+        return res;
+    }
+}
+
+3. https://www.interviewbit.com/problems/painters-partition-problem/
+code-
+public class Solution {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int A = scanner.nextInt();
+        int B = scanner.nextInt();
+        int N = scanner.nextInt();
+        int[] C = new int[N];
+        for (int i = 0; i < N; i++) {
+            C[i] = scanner.nextInt();
+        }
+        int result = paint(A, B, C);
+        System.out.println(result);
+    }
+
+    public static boolean isPossible(int[] C, int A, int mid) {
+        int painters = 1;
+        int current = 0;
+        for (int i = 0; i < C.length; i++) {
+            if (C[i] > mid) {
+                return false;
+            }
+            if (current + C[i] > mid) {
+                painters++;
+                current = C[i];
+                if (painters > A) {
+                    return false;
+                }
+            } else {
+                current += C[i];
+            }
+        }
+        return true;
+    }
+
+    public static int paint(int A, int B, int[] C) {
+        long low = 0, high = 0;
+        for (int i = 0; i < C.length; i++) {
+            high += C[i];
+        }
+        long ans = high % 10000003;
+        while (low <= high) {
+            long mid = low + (high - low) / 2;
+            if (isPossible(C, A, (int) mid)) {
+                ans = mid;
+                high = mid - 1;
+            } else {
+                low = mid + 1;
+            }
+        }
+        return (int) ((ans * B) % 10000003);
+    }
+}
+
+4. https://www.interviewbit.com/problems/allocate-books/
+code-
+public class Solution {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int N = scanner.nextInt();
+        int[] A = new int[N];
+        for (int i = 0; i < N; i++) {
+            A[i] = scanner.nextInt();
+        }
+        int B = scanner.nextInt();
+        int result = books(A, B);
+        System.out.println(result);
+    }
+
+    public static boolean isPossible(int[] A, int B, int pages) {
+        int students = 1;
+        int currentPages = 0;
+        for (int i = 0; i < A.length; i++) {
+            if (A[i] > pages) {
+                return false;
+            }
+            if (currentPages + A[i] > pages) {
+                students++;
+                currentPages = A[i];
+                if (students > B) {
+                    return false;
+                }
+            } else {
+                currentPages += A[i];
+            }
+        }
+        return true;
+    }
+
+    public static int books(int[] A, int B) {
+        if (A.length < B) {
+            return -1;
+        }
+        
+        int low = 0, high = 0;
+        for (int i = 0; i < A.length; i++) {
+            high += A[i];
+        }
+        
+        int result = high;
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+            if (isPossible(A, B, mid)) {
+                result = mid;
+                high = mid - 1;
+            } else {
+                low = mid + 1;
+            }
+        }
+        return result;
+    }
+}
