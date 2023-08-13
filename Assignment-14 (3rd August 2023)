@@ -1,0 +1,94 @@
+1. https://practice.geeksforgeeks.org/problems/quick-sort/1
+Code-
+class Solution {
+    static void swap(int arr[], int i, int j) {
+        int temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
+
+    // Function to partition the array and return the pivot index
+    static int partition(int arr[], int low, int high) {
+        int pivot = arr[high];
+        int i = low - 1;
+
+        for (int j = low; j < high; j++) {
+            if (arr[j] <= pivot) {
+                i++;
+                swap(arr, i, j);
+            }
+        }
+
+        swap(arr, i + 1, high);
+        return i + 1;
+    }
+
+    // Function to perform quick sort on the array
+    static void quickSort(int arr[], int low, int high) {
+        if (low < high) {
+            int pivotIndex = partition(arr, low, high);
+            quickSort(arr, low, pivotIndex - 1);
+            quickSort(arr, pivotIndex + 1, high);
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        int n = scanner.nextInt();
+
+        int[] arr = new int[n];
+        for (int i = 0; i < n; i++) {
+            arr[i] = scanner.nextInt();
+        }
+
+        quickSort(arr, 0, n - 1);
+
+        for (int num : arr) {
+            System.out.print(num + " ");
+        }
+
+        scanner.close();
+    }
+}
+
+2. https://leetcode.com/problems/find-pivot-index/
+Code-
+import java.util.Scanner;
+
+class Solution {
+    public int pivotIndex(int[] nums) {
+        int totalSum = 0;
+        for (int num : nums) {
+            totalSum += num;
+        }
+        
+        int leftSum = 0;
+        for (int i = 0; i < nums.length; i++) {
+            if (leftSum == totalSum - leftSum - nums[i]) {
+                return i;
+            }
+            leftSum += nums[i];
+        }
+        
+        return -1;
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        int n = scanner.nextInt();
+
+        int[] nums = new int[n];
+        for (int i = 0; i < n; i++) {
+            nums[i] = scanner.nextInt();
+        }
+
+        Solution solution = new Solution();
+        int pivotIndex = solution.pivotIndex(nums);
+
+        System.out.println(pivotIndex);
+
+        scanner.close();
+    }
+}
