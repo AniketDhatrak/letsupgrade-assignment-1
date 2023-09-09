@@ -1,0 +1,72 @@
+1. https://leetcode.com/problems/design-a-stack-with-increment-operation/description/
+code:
+class CustomStack {
+    int[] data;
+    int ptr=0;
+    int max;
+    public CustomStack(int maxSize) {
+        this.data =new int[maxSize];
+        this.max=maxSize;
+    }
+    
+    public void push(int x) {
+        if(ptr==data.length) return;
+        data[ptr++]=x;
+    }
+    
+    public int pop() {
+        if(ptr==0){
+            return -1;
+        }
+        return data[--ptr];
+    }
+    
+    public void increment(int k, int val) {
+        if(k>ptr){
+            for(int i=0 ;i<max ; i++){
+                data[i]=data[i]+val;
+            }
+        }else{
+            for(int i=0; i<k ;i++){
+                data[i]=data[i]+val;
+            }
+        }
+    }
+}
+
+2. https://leetcode.com/problems/min-stack/description/
+code:
+class MinStack {
+
+    private ArrayList<Integer> list;
+    private int top;
+
+    public MinStack() {
+        list = new ArrayList<>();
+        top = -1;
+    }
+    
+    public void push(int val) {
+        top = top + 1;
+        list.add(top, val);
+    }
+    
+    public void pop() {
+        top = top -1;
+    }
+    
+    public int top() {
+        int output = list.get(top);
+        return output;
+    }
+    
+    public int getMin() {
+        ArrayList<Integer> minList = new ArrayList<>();
+        for(int i=0;i<=top;i++){
+            int temp = list.get(i);
+            minList.add(i, temp);
+        }
+        Collections.sort(minList);
+        return minList.get(0);
+    }
+}
