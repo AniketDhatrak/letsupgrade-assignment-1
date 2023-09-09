@@ -1,0 +1,133 @@
+1. https://leetcode.com/problems/linked-list-cycle-ii/
+code:
+public class Solution {
+    public ListNode detectCycle(ListNode head) {
+        ListNode slow = head, fast = head;
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+            if (slow == fast) break;
+        }
+        if (fast == null || fast.next == null) return null;
+        while (head != slow) {
+            head = head.next;
+            slow = slow.next;
+        }
+        return head;
+    }
+}
+
+2. https://leetcode.com/problems/middle-of-the-linked-list/
+code:
+
+class Solution {
+    public ListNode middleNode(ListNode head) {
+        ListNode slow, fast, new_head;
+        slow  = fast = head;
+        while(fast != null  && fast.next != null)
+        {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        new_head = slow;
+        return new_head; 
+        
+    }
+}
+
+3. https://leetcode.com/problems/palindrome-linked-list/
+code:
+class Solution {
+    public boolean isPalindrome(ListNode head) {
+        String op="";
+        String left="";
+        String right="";
+        int len=findlen(head);
+        int mid=len/2;
+        int[] array=create_array(head,len);
+        boolean flag=true;
+        for(Integer i:array){
+            op+=Integer.toString(i);
+        }
+        if(len%2==0){
+            left=op.substring(0,mid);
+            for(int i=op.length()-1;i>=mid;i--){
+            right+=op.charAt(i);
+        }
+        }
+
+           
+        if(len%2!=0){
+            left=op.substring(0,mid);
+            for(int i=op.length()-1;i>=mid+1;i--){
+            right+=op.charAt(i);
+        }
+        }
+        return left.equals(right);
+    }
+
+    public static int findlen(ListNode lst){
+        ListNode temp_head=lst;
+        int cnt=0;
+        while(temp_head!=null){
+            cnt+=1;
+            temp_head=temp_head.next;
+        }
+        return cnt;
+    }
+
+    public static int[] create_array(ListNode lst,int len){
+        int[] arr= new int[len];
+        ListNode temp=lst;
+        int cnt=0;
+        while(temp!=null){
+            arr[cnt]=temp.val;
+            cnt+=1;
+            temp=temp.next;
+        }
+        return arr;
+    }
+}
+
+4. https://leetcode.com/problems/merge-two-sorted-lists/
+code:
+class Solution {
+    public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
+        while(list1 != null && list2 != null) {
+            if(list1.val <= list2.val) {
+                list1.next = mergeTwoLists(list1.next, list2);
+                return list1;
+            } else {
+                list2.next = mergeTwoLists(list2.next, list1);
+                return list2;
+            }
+        }
+        return list1 == null ? list2 : list1;
+    }
+}
+
+5. https://leetcode.com/problems/sort-list/
+code:
+class Solution {
+    public ListNode sortList(ListNode head) {
+        
+        ArrayList<Integer> arr = new ArrayList<Integer>();
+        ListNode curr = head;
+        while(curr != null){
+            arr.add(curr.val);
+            curr = curr.next;
+        }
+
+        Collections.sort(arr);
+        
+        ListNode head2 = new ListNode();
+        ListNode ret = head2;
+        for(int i=0;i<arr.size();i++){
+            ListNode newNode = new ListNode(arr.get(i));
+            head2.next = newNode;
+            head2 = head2.next;
+        }
+        
+        return ret.next;
+    }
+}
