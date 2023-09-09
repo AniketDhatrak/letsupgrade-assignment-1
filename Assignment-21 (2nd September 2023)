@@ -1,0 +1,299 @@
+1. https://leetcode.com/problems/valid-parentheses/
+code:
+class Solution {
+    public boolean isValid(String s) {
+         Stack<Character> stack = new Stack<>();
+
+        for (char x : s.toCharArray()
+             ) {
+
+            if(x=='('){
+                
+                stack.push(')');
+            } else if (x=='{') {
+                stack.push('}');
+                
+            } else if (x=='[') {
+                stack.push(']');
+            } else if (stack.isEmpty() || stack.pop()!=x) {
+
+                return false;
+            }
+
+        }
+
+
+        return stack.isEmpty();
+        
+    }
+}
+
+2. https://www.interviewbit.com/problems/nearest-smaller-element/
+code:
+public class Solution {
+    public int[] prevSmaller(int[] A) {
+        int n = A.length;
+        int[] G = new int[n];
+        Stack<Integer> stack = new Stack<>();
+
+        for (int i = 0; i < n; i++) {
+            while (!stack.isEmpty() && stack.peek() >= A[i]) {
+                stack.pop();
+            }
+
+            if (stack.isEmpty()) {
+                G[i] = -1;
+            } else {
+                G[i] = stack.peek();
+            }
+
+            stack.push(A[i]);
+        }
+
+        return G;
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int n = scanner.nextInt();
+        int[] A = new int[n];
+        
+        for (int i = 0; i < n; i++) {
+            A[i] = scanner.nextInt();
+        }
+
+        Solution solution = new Solution();
+        int[] G = solution.prevSmaller(A);
+
+        for (int i = 0; i < n; i++) {
+            System.out.print(G[i] + " ");
+        }
+    }
+}
+
+3. https://leetcode.com/problems/largest-rectangle-in-histogram/
+code:
+class Solution {
+    public int largestRectangleArea(int[] heights) {
+        int n = heights.length;
+        if(n == 0) return 0;
+        int maxArea = 0;
+        int left[] = new int[n];
+        int right[] = new int[n];
+        
+        left[0] = -1;
+        right[n - 1] = n;
+        
+        for(int i = 1; i < n; i++){
+            int prev = i - 1;
+            while(prev >= 0 && heights[prev] >= heights[i]){
+                prev = left[prev];
+            }
+            left[i] = prev;
+        }
+        
+        for(int i = n - 2; i >= 0; i--){
+            int prev = i + 1; 
+            while(prev < n && heights[prev] >= heights[i]){
+                prev = right[prev]; 
+            }
+            right[i] = prev;
+        }
+        for(int i = 0; i < n; i++){
+            int width = right[i] - left[i] - 1;
+            maxArea = Math.max(maxArea, heights[i] * width);
+        }
+        return maxArea;
+        
+    }
+}
+
+4. https://leetcode.com/problems/sum-of-subarray-minimums/
+code:
+class Solution {
+    public int sumSubarrayMins(int[] arr) {
+	    Deque<Integer> stack = new ArrayDeque<>();
+        
+        stack.push(-1);
+        long res = 0;
+        for(int i = 0; i < arr.length; i++) {
+            while(stack.size() > 1 && arr[stack.peek()] > arr[i]) {
+                int currElemIndex = stack.pop();
+                
+                res += ((long) arr[currElemIndex] * (currElemIndex - stack.peek()) * ( i - currElemIndex)) % 1000000007;
+                res = res % 1000000007;
+            }
+            stack.push(i);
+        }
+    
+        // right bound we set to array length;
+        int rightBoundary = arr.length;
+    
+        while(stack.size() > 1) {
+            int currElemIndex = stack.pop();
+            res += ((long) arr[currElemIndex] * (currElemIndex - stack.peek()) * (rightBoundary - currElemIndex)) % 1000000007;
+            res = res % 1000000007;
+        }
+        
+        return (int) res;
+        
+    }
+}
+
+5. https://leetcode.com/problems/next-greater-element-i/
+code:
+
+class Solution {
+    public int[] nextGreaterElement(int[] nums1, int[] nums2) {
+        
+        Stack<Integer> stack = new Stack<>();
+        HashMap<Integer, Integer> map = new HashMap<>();
+        for(int i = nums2.length-1; i>=0; i--){
+            
+            if(stack.isEmpty()) {
+               
+                map.put(nums2[i], -1);
+            }
+            else if(!stack.isEmpty() && nums2[i]< stack.peek()){
+               
+                map.put(nums2[i], stack.peek());
+            }
+            else{
+
+                while(!stack.isEmpty() && nums2[i]>= stack.peek()){
+                    stack.pop();
+                }
+                    if(stack.isEmpty()){
+                        
+                        map.put(nums2[i], -1);
+                    }
+                    else{
+                        map.put(nums2[i], stack.peek());
+                    }    
+            }
+            stack.push(nums2[i]);
+        }
+
+        int ans[] = new int[nums1.length];
+        for(int i=0; i<nums1.length; i++){
+            ans[i] = map.get(nums1[i]);
+        }
+        return ans;
+    }
+}
+
+6. https://leetcode.com/problems/maximal-rectangle/
+code:
+class Solution {
+    public int maximalRectangle(char[][] matrix) {
+
+        int max = 0;
+
+        int m = matrix.length;
+        int n = matrix[0].length;
+
+        int arr[] = new int[n];
+
+        for(int i = 0; i < m; i++){
+            for(int j = 0; j < n; j++){
+                if(matrix[i][j] == '0'){
+                    arr[j] = 0;
+                } else {
+                    arr[j] += 1;
+                }
+            }
+
+            max = Math.max(max, helper(arr));
+        }
+
+        return max;
+    }
+
+    public int helper(int[] arr){
+        Deque<Pair<Integer, Integer>> st = new ArrayDeque<>();
+
+        int max = 0;
+
+        for(int i = 0; i < arr.length; i++){
+            int idx = i;
+
+            while(st.size() > 0 && st.peek().getKey() >= arr[i]){
+                Pair<Integer, Integer> p = st.pop();
+
+                idx = p.getValue();
+
+                int area = p.getKey()*(i - idx);
+
+                max = Math.max(max, area);
+            }
+
+            st.push(new Pair<>(arr[i], idx));
+        }
+
+        while(st.size() > 0){
+            Pair<Integer, Integer> p = st.pop();
+
+            int area = p.getKey()*(arr.length - p.getValue());
+
+            max = Math.max(max, area);
+        }
+
+        return max;
+    }
+}
+
+7. https://practice.geeksforgeeks.org/problems/sort-a-stack/1
+code:
+import java.util.Stack;
+
+class GfG {
+    // Function to insert an element at the correct position in the sorted stack.
+    private void insertSorted(Stack<Integer> stack, int element) {
+        // Base case: If the stack is empty or the element is greater than the top element, push it.
+        if (stack.isEmpty() || element > stack.peek()) {
+            stack.push(element);
+            return;
+        }
+
+        // Recursive case: Pop elements from the stack until the element is greater than the top element.
+        int top = stack.pop();
+        insertSorted(stack, element);
+
+        // Push back the elements popped earlier.
+        stack.push(top);
+    }
+
+    // Function to sort the given stack.
+    public Stack<Integer> sort(Stack<Integer> s) {
+        // Base case: If the stack is empty or has only one element, it is already sorted.
+        if (s.isEmpty() || s.size() == 1) {
+            return s;
+        }
+
+        // Pop the top element.
+        int temp = s.pop();
+
+        // Recursively sort the remaining stack.
+        sort(s);
+
+        // Insert the popped element at the correct position in the sorted stack.
+        insertSorted(s, temp);
+
+        return s;
+    }
+
+    public static void main(String[] args) {
+        Stack<Integer> stack = new Stack<>();
+        stack.push(3);
+        stack.push(2);
+        stack.push(1);
+
+        GfG solution = new GfG();
+        solution.sort(stack);
+
+        System.out.println("Sorted Stack:");
+        while (!stack.isEmpty()) {
+            System.out.print(stack.pop() + " ");
+        }
+    }
+}
