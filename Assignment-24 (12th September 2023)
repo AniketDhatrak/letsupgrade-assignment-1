@@ -1,0 +1,243 @@
+1. https://leetcode.com/problems/binary-tree-inorder-traversal/
+code-
+class Solution {
+    List<Integer> li = new LinkedList<Integer>();
+    public List<Integer> inorderTraversal(TreeNode root) {
+     if(root == null){
+         List<Integer> li = new LinkedList<Integer>();
+         return li ;
+     }
+     inorderTraversal(root.left);     
+     li.add(root.val);     
+     inorderTraversal(root.right);
+     return li;
+
+    }
+    
+}
+
+2. https://leetcode.com/problems/binary-tree-level-order-traversal/
+code-
+class Solution {
+    public List<List<Integer>> levelOrder(TreeNode root) 
+    {
+        List<List<Integer>>al=new ArrayList<>();
+        pre(root,0,al);
+        return al;
+    }
+    public static void pre(TreeNode root,int l,List<List<Integer>>al)
+    {
+        if(root==null)
+            return;
+        if(al.size()==l)
+        {
+            List<Integer>li=new ArrayList<>();
+            li.add(root.val);
+            al.add(li);
+        }
+        else
+            al.get(l).add(root.val);
+        pre(root.left,l+1,al);
+        pre(root.right,l+1,al);
+    } 
+}
+
+3. https://leetcode.com/problems/binary-tree-preorder-traversal/
+code-
+class Solution {
+    List<Integer> list = new ArrayList();
+    public List<Integer> preorderTraversal(TreeNode root) {
+        if(root != null){
+            list.add(root.val);
+            preorderTraversal(root.left);
+            preorderTraversal(root.right);
+        }
+        return list;
+    }
+}
+
+4. https://leetcode.com/problems/binary-tree-postorder-traversal/
+code-
+class Solution {
+    ArrayList<Integer> list;
+    public List<Integer> postorderTraversal(TreeNode root) {
+        list = new ArrayList<>();
+        postorder(root);
+        return list;  
+    }
+    public void postorder(TreeNode root){
+        if(root==null) return;
+
+        postorder(root.left);
+        postorder(root.right);
+        list.add(root.val);
+    }
+}
+
+5. https://leetcode.com/problems/maximum-depth-of-binary-tree/
+code-
+class Solution {
+    public int maxDepth(TreeNode root) {
+        // Base Condition
+        if(root == null) return 0;
+        // Hypothesis
+        int left = maxDepth(root.left);
+        int right = maxDepth(root.right);
+        // Induction
+        return Math.max(left, right) + 1;
+    }
+}
+
+6. https://leetcode.com/problems/symmetric-tree/
+code-
+
+class Solution {
+    public boolean isSymmetric(TreeNode root) {
+        if (root == null) return true;
+
+        return check(root.left, root.right);
+    }
+
+    boolean check(TreeNode l, TreeNode r) {
+        if (l == null && r == null) return true;
+
+        if (l == null || r == null || l.val != r.val) return false;
+
+        return check(l.left, r.right) && check(l.right, r.left);
+    }
+}
+
+7. https://leetcode.com/problems/maximum-level-sum-of-a-binary-tree/
+code-
+
+class Solution {
+    public int maxLevelSum(TreeNode root) {
+        int maxLevel = 1;
+        int maxSum = root.val;
+        int level = 1;
+        
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+        
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            int levelSum = 0;
+            
+            for (int i = 0; i < size; i++) {
+                TreeNode node = queue.poll();
+                levelSum += node.val;
+                
+                if (node.left != null) {
+                    queue.offer(node.left);
+                }
+                
+                if (node.right != null) {
+                    queue.offer(node.right);
+                }
+            }
+            
+            if (levelSum > maxSum) {
+                maxSum = levelSum;
+                maxLevel = level;
+            }
+            
+            level++;
+        }
+        
+        return maxLevel;
+    }
+}
+
+8. https://leetcode.com/problems/sum-root-to-leaf-numbers/
+code-
+
+class Solution {
+  List<String>lis=new ArrayList<>();
+    public int sumNumbers(TreeNode root) {
+        helper(root,"");
+        int sum=0;
+        for(String s:lis){
+          sum+=Integer.parseInt(s);
+        }
+        return sum;
+    }
+    void helper(TreeNode r,String s){
+      if(r==null) return;
+      s+=r.val;
+      if(r.left==null && r.right==null){
+        lis.add(s);
+        s=s.replace(s.charAt(s.length()-1)+"","");
+      }
+      helper(r.left,s);
+      helper(r.right,s);
+      return;
+
+    }
+}
+
+10. https://leetcode.com/problems/binary-tree-right-side-view/description/
+code-
+class Solution {
+    int maxLevel = 0;
+    List<Integer> list = new ArrayList();
+    public List<Integer> rightSideView(TreeNode root) {
+        if(root == null) return list;
+        rightView(root,1);
+        return list;
+    }
+    void rightView(TreeNode root,int level){
+        if(root == null) return;
+        if(maxLevel < level){
+            list.add(root.val);
+            maxLevel = level;
+        }
+        rightView(root.right,level+1);
+        rightView(root.left,level+1);
+    }
+}
+
+11. https://practice.geeksforgeeks.org/problems/left-view-of-binary-tree/1?
+code-
+class Tree
+{
+    //Function to return list containing elements of left view of binary tree.
+   ArrayList<Integer> leftView(Node root)
+    {
+        
+        ArrayList<Integer> main_arr = new ArrayList<>();
+        ArrayList<Integer> child_arr = new ArrayList<>();
+        
+        if(root==null){
+            return main_arr;
+        }
+        
+        Queue<Node> main_queue = new LinkedList<>();
+        
+        main_queue.add(root);
+        main_queue.add(null);
+        main_arr.add(root.data);
+        
+        while(main_queue.size()>1){
+            
+            root = main_queue.poll();
+            
+            if(root==null){
+                main_queue.add(null);
+                main_arr.add(child_arr.get(0));
+                child_arr = new ArrayList<>();
+                continue;
+            }
+            
+            if(root.left!=null){
+                main_queue.add(root.left);
+                child_arr.add(root.left.data);
+            }
+            if(root.right!=null){
+                main_queue.add(root.right);
+                child_arr.add(root.right.data);
+            }
+            
+        }
+        return main_arr;
+        }
+}
