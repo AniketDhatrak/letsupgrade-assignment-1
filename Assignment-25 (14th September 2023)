@@ -1,0 +1,163 @@
+1. https://leetcode.com/problems/binary-tree-right-side-view/description/
+code-
+class Solution {
+    int maxLevel = 0;
+    List<Integer> list = new ArrayList();
+    public List<Integer> rightSideView(TreeNode root) {
+        if(root == null) return list;
+        rightView(root,1);
+        return list;
+    }
+    void rightView(TreeNode root,int level){
+        if(root == null) return;
+        if(maxLevel < level){
+            list.add(root.val);
+            maxLevel = level;
+        }
+        rightView(root.right,level+1);
+        rightView(root.left,level+1);
+    }
+}
+
+2. https://practice.geeksforgeeks.org/problems/left-view-of-binary-tree/1?utm_source=gfg&utm_medium=article&utm_campaign=bottom_sticky_on_article
+code-
+class Tree {
+     ArrayList<Integer> leftView(Node root) {
+        ArrayList<Integer> result = new ArrayList<Integer>();
+        leftView(root, result, 0);
+        return result;
+    }
+    
+    public void leftView(Node curr, ArrayList<Integer> result, int currDepth){
+        if(curr == null){
+            return;
+        }
+        if(currDepth == result.size()){
+            result.add(curr.data);
+        }
+        
+        leftView(curr.left, result, currDepth + 1);
+        leftView(curr.right, result, currDepth + 1);
+        
+        
+    }
+}
+
+3. https://practice.geeksforgeeks.org/problems/top-view-of-binary-tree/1
+code-
+class Solution
+{
+    static ArrayList<Integer> topView(Node root)
+    {
+        class qObj{
+            Node node;
+            int ht;
+            qObj(Node node,int ht){
+                this.node = node;
+                this.ht = ht;
+            }// add your code
+        }
+        if(root == null) return null;
+        Queue<qObj> q = new LinkedList<qObj>();
+        Map<Integer,Node> hm = new TreeMap<Integer,Node>();
+        q.add(new qObj(root,0));
+        while(!q.isEmpty()){
+            qObj temp = q.poll();
+            if(!hm.containsKey(temp.ht)){
+                hm.put(temp.ht,temp.node);
+            }
+            if(temp.node.left!=null){
+                q.add(new qObj(temp.node.left,temp.ht-1));
+            }
+            if(temp.node.right!=null){
+                q.add(new qObj(temp.node.right,temp.ht+1));
+            }
+            
+        }
+        ArrayList<Integer> res = new ArrayList<Integer>();
+        for(Map.Entry<Integer,Node> entry:hm.entrySet()){
+            res.add(entry.getValue().data);
+        }
+        return res;
+    }
+}
+
+4. https://practice.geeksforgeeks.org/problems/bottom-view-of-binary-tree/1?utm_source=gfg&utm_medium=article&utm_campaign=bottom_sticky_on_article
+code-
+class Solution
+{
+    public ArrayList <Integer> bottomView(Node root)
+    {
+        // Code here
+        ArrayList<Integer> ans=new ArrayList<>();
+        TreeMap<Integer,int[]> hm=new TreeMap<>();
+        help(root,0,0,hm);
+        for(var i:hm.entrySet()){
+            ans.add(i.getValue()[0]);
+        }
+        return ans;
+        
+        
+    }
+    public void help(Node root,int level,int verlevel,TreeMap<Integer,int[]> hm){
+        if(root==null)return;
+        if(!hm.containsKey(verlevel)||hm.get(verlevel)[1]<=level)hm.put(verlevel,new int[]{root.data,level});
+        help(root.left,level+1,verlevel-1,hm);
+        help(root.right,level+1,verlevel+1,hm);
+    }
+}
+
+5. https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/
+code-
+
+class Solution {
+    private int preorderIdx = 0;
+    private TreeNode construct(int[] preorder, HashMap<Integer,Integer> map, int left, int right){
+        if(left>right) return null;
+        int pval = preorder[preorderIdx];
+        int inorderIdx = map.get(pval);
+
+        TreeNode root = new TreeNode(pval);
+        preorderIdx++;
+        root.left = construct(preorder, map, left, inorderIdx-1);
+        root.right = construct(preorder, map, inorderIdx+1, right);
+        return root;
+        
+    }
+    public TreeNode buildTree(int[] preorder, int[] inorder) {
+        HashMap<Integer,Integer> map = new HashMap<>();
+        int len = inorder.length;
+        for(int i=0;i<len;i++){
+            map.put(inorder[i],i);
+        }
+
+        return construct(preorder, map, 0, len-1);
+    }
+}
+
+6. https://leetcode.com/problems/construct-binary-tree-from-inorder-and-postorder-traversal/
+code-
+class Solution {
+    public TreeNode buildTree(int[] inorder, int[] postorder) {
+        Map<Integer, Integer> map = new HashMap<>();
+
+        for(int i = 0; i < inorder.length; i++) {
+            map.put(inorder[i], i);
+        }
+
+        return helper(inorder, postorder, 0, inorder.length - 1, 0, postorder.length - 1, map);
+    }
+
+    private TreeNode helper(int[] inorder, int[] postorder, int inStart, int inEnd, int postStart, int postEnd, Map<Integer, Integer> map) {
+        if(inStart > inEnd || postStart > postEnd) return null;
+
+        TreeNode root = new TreeNode(postorder[postEnd]);
+
+        int inRoot = map.get(root.val);
+
+        root.left = helper(inorder, postorder, inStart, inRoot - 1, postStart, postEnd - (inEnd - inRoot) - 1, map);
+        root.right = helper(inorder, postorder, inRoot + 1, inEnd, postEnd - (inEnd - inRoot), postEnd - 1, map);
+        
+        return root;
+    }
+}
