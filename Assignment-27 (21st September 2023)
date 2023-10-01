@@ -1,0 +1,205 @@
+1. https://leetcode.com/problems/recover-binary-search-tree/
+code-
+class Solution {
+    TreeNode prev=null,first=null,second=null;
+    void inorder(TreeNode root){
+        if(root==null)
+            return ;
+        inorder(root.left);
+        if(prev!=null&&root.val<prev.val){
+            if(first==null)
+                first=prev;
+            second=root;
+        }
+        prev=root;
+        inorder(root.right);
+    }
+    public void recoverTree(TreeNode root) {
+        if(root==null)
+            return ; 
+        inorder(root);
+        int temp=first.val;
+        first.val=second.val;
+        second.val=temp;
+    }
+}
+
+2. https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/
+code-
+
+class Solution {
+    public static boolean getPath(TreeNode root, TreeNode n, ArrayList<TreeNode> list){
+        if(root == null){
+            return false;
+        }
+
+        list.add(root);
+
+        if(root.val == n.val){
+            return true;
+        }
+        boolean foundLeft = getPath(root.left,n,list);
+        boolean foundRight = getPath(root.right,n,list);
+
+        if(foundLeft || foundRight){
+            return true;
+
+        }
+        list.remove(list.size()-1);
+        return false;
+       }
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        ArrayList<TreeNode> path1 = new ArrayList<>();
+        ArrayList<TreeNode> path2 = new ArrayList<>();
+
+        getPath(root, p, path1);
+        getPath(root, q,path2);
+
+        //lca
+           int i=0;
+           for(; i<path1.size() && i<path2.size();i++){
+               if(path1.get(i) != path2.get(i)){
+                   break;
+               }
+           }
+           TreeNode lca = path1.get(i-1);
+           return lca;
+    }
+}
+
+3. https://leetcode.com/problems/diameter-of-binary-tree/
+code-
+class Solution {
+
+    class Info{
+        int dia;
+        int height;
+        Info(int dia,int height){
+            this.dia=dia;
+            this.height=height;
+        }
+    }
+
+    public Info getDia(TreeNode root){
+        if(root==null){
+            return (new Info(0,0));
+        }
+        Info l=getDia(root.left);
+        Info r=getDia(root.right);
+        int dia=Math.max(l.height+r.height+1,Math.max(l.dia,r.dia));
+        int ht=Math.max(l.height,r.height)+1;
+        return new Info(dia,ht);
+    }
+
+    public int diameterOfBinaryTree(TreeNode root) {
+        Info ans=getDia(root);
+        return ans.dia-1;
+        
+    }
+}
+
+4. https://practice.geeksforgeeks.org/problems/print-common-nodes-in-bst/1?utm_source=gfg&utm_medium=article&utm_campaign=bottom_sticky_on_article
+code-
+class Solution
+{
+    //Function to find the nodes that are common in both BST.
+    public static void inOrder2(Node root, ArrayList<Integer> ar){
+        if(root != null){
+             inOrder2(root.left, ar);
+             ar.add(root.data);
+             inOrder2(root.right, ar);
+        }
+    }
+    public static ArrayList<Integer> findCommon(Node root1,Node root2)
+    {
+        //code here
+        ArrayList<Integer> ar = new ArrayList<>();
+        ArrayList<Integer> ar1 = new ArrayList<>();
+        ArrayList<Integer> ar2 = new ArrayList<>();
+        
+        inOrder2(root1, ar1);
+        inOrder2(root2, ar2);
+        if(ar1.size() < ar1.size()){
+            for(int i = 0; i<ar1.size();i++){
+                if((ar2.contains(ar1.get(i))))
+                    ar.add(ar1.get(i));
+            }
+            return ar;
+        }
+        else{
+            for(int i = 0; i<ar2.size();i++){
+                if((ar1.contains(ar2.get(i))))
+                    ar.add(ar2.get(i));
+            }
+            return ar;
+        }
+    }
+    
+}
+
+5. https://leetcode.com/problems/same-tree/
+code-
+
+class Solution {
+   
+    public boolean isSameTree(TreeNode p, TreeNode q) {
+     if (p == null && q == null) {
+            return true;
+        }
+        
+        if (p == null || q == null) {
+            return false;
+        }
+        
+        if (p.val != q.val) {
+            return false;
+        }
+        
+        return isSameTree(p.left, q.left) && isSameTree(p.right, q.right);
+      
+    }
+}
+
+6. https://leetcode.com/problems/kth-smallest-element-in-a-bst/
+code-
+class Solution 
+{
+    public void inorderSolve(TreeNode root, int k, int[] result)
+    {
+        if(root == null)
+            return;
+        
+        inorderSolve(root.left, k, result);
+        
+        result[0]= result[0] + 1;
+        
+        if(result[0] == k){
+            result[1]= root.val;
+            return;
+        }
+        
+        inorderSolve(root.right, k, result);
+        return;
+    }
+    public int kthSmallest(TreeNode root, int k) 
+    {
+        int[] result= {0, -1};
+        
+        inorderSolve(root, k, result);
+        return result[1];
+    }
+}
+
+8. https://leetcode.com/problems/validate-binary-search-tree/
+code-
+public class Solution {
+    public boolean isValidBST(TreeNode root) {
+        return isValidBST(root, Long.MIN_VALUE, Long.MAX_VALUE);
+    }
+    
+    public boolean isValidBST(TreeNode root, long minVal, long maxVal) {
+        if (root == null) return true;
+        if (root.val >= maxVal || root.val <= minVal) return false;
+        return isValidBST(root.left, minVal, root.val) && isValidBST(root.right, root.val, maxVal);
+    }
+}
